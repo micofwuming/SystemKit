@@ -1,8 +1,11 @@
 SystemKit (adpated)
 =========
 
+A fork of [gao-sun/SystemKit](https://github.com/gao-sun/SystemKit) with bug
+fixes, used by [eul](https://github.com/micofwuming/eul).
+
 A macOS system library in Swift based off of
-[libtop](http://www.opensource.apple.com/source/top/top-100.1.2/libtop.c), from
+[libtop](https://github.com/apple-oss-distributions/top/blob/top-100.1.2/libtop.c), from
 Apple's top implementation.
 
 - For an example usage of this library, see
@@ -13,26 +16,16 @@ Apple's top implementation.
 
 ### Requirements
 
-- [Latest Xcode](https://developer.apple.com/xcode/downloads/)
-- macOS 10.15+
+- [Latest Xcode](https://developer.apple.com/xcode/resources/)
+- macOS 12.0+
 
 ### Installation
 
-#### Carthage
+#### Swift Package Manager
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+To integrate SystemKit using [Swift Package Manager](https://github.com/swiftlang/swift-package-manager), add it to the dependencies in your Package.swift:
 
-You can install Carthage with [Homebrew](http://brew.sh) using the following command:
-
-    $ brew update
-    $ brew install carthage
-
-To integrate SystemKit into your Xcode project using Carhage, specify it in your Cartfile:
-
-    github "gao-sun/SystemKit"
-
-Run `carthage update` to build the framework and drag the built SystemKit.framework into your Xcode project.
-Don't forget to alter your Carthage [building phase for macOS](https://github.com/Carthage/Carthage#if-youre-building-for-os-x).
+    .package(url: "https://github.com/micofwuming/SystemKit", from: "0.0.13")
 
 ### Example
 
@@ -94,10 +87,10 @@ Sample ouput from
 
 ### References
 
-- [top](http://www.opensource.apple.com/source/top/)
-- [hostinfo](http://www.opensource.apple.com/source/system_cmds/)
-- [vm_stat](http://www.opensource.apple.com/source/system_cmds/)
-- [PowerManagement](http://www.opensource.apple.com/source/PowerManagement/)
+- [top](https://github.com/apple-oss-distributions/top)
+- [hostinfo](https://github.com/apple-oss-distributions/system_cmds)
+- [vm_stat](https://github.com/apple-oss-distributions/system_cmds)
+- [PowerManagement](https://github.com/apple-oss-distributions/PowerManagement)
 - iStat Pro
 
 
