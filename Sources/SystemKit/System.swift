@@ -146,10 +146,10 @@ public struct System {
                                         nice   : Double) {
         let load = System.hostCPULoadInfo()
         
-        let userDiff = Double(load.cpu_ticks.0 - loadPrevious.cpu_ticks.0)
-        let sysDiff  = Double(load.cpu_ticks.1 - loadPrevious.cpu_ticks.1)
-        let idleDiff = Double(load.cpu_ticks.2 - loadPrevious.cpu_ticks.2)
-        let niceDiff = Double(load.cpu_ticks.3 - loadPrevious.cpu_ticks.3)
+        let userDiff = Double(load.cpu_ticks.0 &- loadPrevious.cpu_ticks.0)
+        let sysDiff  = Double(load.cpu_ticks.1 &- loadPrevious.cpu_ticks.1)
+        let idleDiff = Double(load.cpu_ticks.2 &- loadPrevious.cpu_ticks.2)
+        let niceDiff = Double(load.cpu_ticks.3 &- loadPrevious.cpu_ticks.3)
         
         let totalTicks = sysDiff + userDiff + niceDiff + idleDiff
 
