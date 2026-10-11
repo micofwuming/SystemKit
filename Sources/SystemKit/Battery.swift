@@ -70,6 +70,8 @@ public struct Battery {
         case MaxCapacity      = "MaxCapacity"
         /// M1 Macs use this for mah display
         case AppleRawMaxCapacity      = "AppleRawMaxCapacity"
+        case BatteryData      = "BatteryData"
+        case FullChargeCapacity = "FullChargeCapacity"
         case Temperature      = "Temperature"
         /// Time remaining to charge/discharge
         case TimeRemaining    = "TimeRemaining"
@@ -190,7 +192,11 @@ public struct Battery {
         let prop = IORegistryEntryCreateCFProperty(service,
                                                    Key.MaxCapacity.rawValue as CFString,
                                                    kCFAllocatorDefault, 0)
-        return rawProp?.takeUnretainedValue() as? Int ?? prop?.takeUnretainedValue() as? Int ?? 0
+        let designProp = IORegistryEntryCreateCFProperty(service,
+                                                         Key.DesignCapacity.rawValue as CFString,
+                                                         kCFAllocatorDefault, 0)?.takeRetainedValue()
+        let dataProp = designProp == nil ? batteryData()?[Key.FullChargeCapacity.rawValue] as? Int : nil
+        return rawProp?.takeUnretainedValue() as? Int ?? dataProp ?? prop?.takeUnretainedValue() as? Int ?? 0
     }
     
     
@@ -205,7 +211,7 @@ public struct Battery {
         let prop = IORegistryEntryCreateCFProperty(service,
                                                    Key.DesignCapacity.rawValue as CFString,
                                                    kCFAllocatorDefault, 0)
-        return prop?.takeUnretainedValue() as? Int ?? 0
+        return prop?.takeUnretainedValue() as? Int ?? batteryData()?[Key.DesignCapacity.rawValue] as? Int ?? 0
     }
     
     
@@ -347,6 +353,18 @@ public struct Battery {
     //--------------------------------------------------------------------------
     // MARK: PRIVATE HELPERS
     //--------------------------------------------------------------------------
+    
+    
+    /**
+    Get the battery data dictionary. Newer Macs keep the capacity values in mAh
+    here instead of the top level.
+    */
+    fileprivate func batteryData() -> NSDictionary? {
+        let prop = IORegistryEntryCreateCFProperty(service,
+                                                   Key.BatteryData.rawValue as CFString,
+                                                   kCFAllocatorDefault, 0)
+        return prop?.takeRetainedValue() as? NSDictionary
+    }
     
     
     /**
